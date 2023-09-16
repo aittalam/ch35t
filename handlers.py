@@ -10,3 +10,14 @@ def process_data(data, mime_type):
         return handlers[mime_type](data)
     else:
         raise ValueError(f"Unsupported mime type: {mime_type}")
+
+class DataHandler():
+
+    def __init__(self, data):
+        pass
+
+    def parse(self, data):
+        pass
+
+    def show():
+        pass
