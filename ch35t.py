@@ -9,7 +9,20 @@ class NullPayloadException(Exception):
 
 # application/octet-stream is used for generic files
 
-class OCLoader():
+# # Dictionary mapping mime types to functions
+# handlers = {
+#     "text/plain": handle_text,
+#     "application/zip": handle_zip,
+#     "image/svg+xml": handle_svg,
+# }
+
+# def process_data(data, mime_type):
+#     if mime_type in handlers:
+#         return handlers[mime_type](data)
+#     else:
+#         raise ValueError(f"Unsupported mime type: {mime_type}")
+
+class ChestLoader():
     ### TODO: add error handling here
     def from_file(fname):
         with open(fname, "rt") as f:
@@ -24,7 +37,7 @@ class OCLoader():
             return json.loads(res.text)
 
 
-class OCHint():
+class Hint():
     _default_format = "text/plain"
 
     def __init__(self, json_data):
@@ -39,14 +52,14 @@ class OCHint():
             self.format = self._default_format
 
     def __str__(self):
-        return_str  =  "[i] OCHint\n"
+        return_str  =  "[i] Hint\n"
         return_str += f"    Origin: {self.origin}\n"
         return_str += f"    Data: {self.data}\n"
         return_str += f"    Format: {self.format}\n"
         return return_str
 
 
-class OCPayload():
+class Payload():
     _default_format = "text/plain"
 
     def __init__(self, json_data):
@@ -62,14 +75,14 @@ class OCPayload():
             self.format = self._default_format
 
     def __str__(self):
-        return_str  =  "[i] OCPayload\n"
+        return_str  =  "[i] Payload\n"
         return_str += f"    Origin: {self.origin}\n"
         return_str += f"    Data: {self.data}\n"
         return_str += f"    Format: {self.format}\n"
         return_str += f"    Method: {self.method}\n"
         return return_str
     
-class OCParser():
+class Parser():
 
     def __init__(self, string=None):
         
@@ -92,18 +105,18 @@ class OCParser():
                 
         if self._json is not None:
             # load hint
-            self._hint = OCHint(self._json)
+            self._hint = Hint(self._json)
             # load payload
-            self._payload = OCPayload(self._json)
+            self._payload = Payload(self._json)
     
     def _load_string(self, string):
-        self._json = OCLoader.from_string(string)
+        self._json = ChestLoader.from_string(string)
 
     def _load_file(self, fname):
-        self._json = OCLoader.from_file(fname)
+        self._json = ChestLoader.from_file(fname)
     
     def _load_url(self, url):
-        self._json = OCLoader.from_url(url)
+        self._json = ChestLoader.from_url(url)
 
     def json(self):
         return self._json
