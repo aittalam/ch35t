@@ -58,7 +58,9 @@ class TextDataHandler(DataHandler):
         super().__init__(data, ctx)
 
     def handle(self):
-        pass
+        if self._data.startswith("base64,"):
+            self._data = self.decode_data().decode()
+
 
 class ZipDataHandler(DataHandler):
     mime_type = "application/zip"

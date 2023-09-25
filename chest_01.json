@@ -1,4 +1,0 @@
-{
-"hint": { "data": "this is the hint", "format": "text/plain" },
-"payload": {"data": "this is the payload", "format": "text/plain", "method": "No method" }
-}

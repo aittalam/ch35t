@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://3564020356.org/ch35t/ch35t.schema.json",
+  "title": "Ch35t",
+  "description": "Chests as defined in the Ch35t format",
+  "type": "object",
+  "properties": {
+    "label": {
+      "type": "object",
+      "$comment": "A label attached to the chest, containing information about it",
+      "properties": {
+        "name": {
+          "type": "string",
+          "$comment": "The chest name"
+        },
+        "URI": {
+          "type": "string",
+          "format": "uri",
+          "$comment": "A Uniform Resource Identifier for the chest (can match the URL it can be downloaded from"
+        },
+        "author": {
+          "type": "string",
+          "format": "email",
+          "$comment": "The email address of the chest creator (often used in conjuction with a signature"
+        }
+      },
+      "required": [ "name" ]
+    },
+    "hint": {
+      "type": "object",
+      "$comment": "A hint that might help you find the key to open the chest",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "format": "uri",
+          "$comment": "A Uniform Resource Identifier for the hint (can match the URL it can be downloaded from)"
+        },
+        "data": {
+          "type": "string",
+          "$comment": "The hint contents (plain text or base64-encoded binary)"
+        },
+        "format": {
+          "enum": [ "text/plain", "application/zip" ],
+          "$comment": "The format (mime-type) of the hint contents. Note that we currently allow only formats for which we have a handler, but this is not strictly necessary (i.e. we can just save files we do not know how to handle and allow players to deal with them)"
+        }
+      },
+      "if": {
+        "$comment": "If origin URL is provided with no data, we currently require a format to be specified (i.e. we do not assume text/plain default as we do with data)",
+        "allOf" : [
+          {
+            "required": [ "origin" ]
+          },
+          {
+            "not": { 
+              "required" : [ "data" ]
+            } 
+          }
+        ]
+      },
+      "then": {
+        "required": [ "format" ]
+      }
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "format": "uri",
+          "$comment": "A Uniform Resource Identifier for the payload (can match the URL it can be downloaded from)"
+        },
+        "data": {
+          "type": "string",
+          "$comment": "The hint contents (plain text or base64-encoded binary)"
+        },
+        "format": {
+          "enum": [ "text/plain", "application/zip" ],
+          "$comment": "The format (mime-type) of the payload contents. Note that we currently allow only formats for which we have a handler, but this is not strictly necessary (i.e. we can just save files we do not know how to handle and allow players to deal with them)"
+        },
+        "output-format": {
+          "type": "string",
+          "$comment": "The format (mime-type) of the decrypted payload. Note that as we do not necessarily need to handle this, we leave the possibility of using any format here."
+        },
+        "method": {
+          "type": "object",
+          "$comment": "The encryption method used to conceal the payload",
+          "properties": {
+            "name": {
+              "type": "string",
+              "$comment": "The name of the encryption method"
+            },
+            "args" : {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "$comment": "Extra arguments to be provided to the method handler"
+            }
+          },
+          "required": [ "name" ]
+        }
+      }
+    }
+  },
+  "required" : [ "label", "payload" ]
+}

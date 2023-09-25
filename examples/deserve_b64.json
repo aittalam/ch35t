@@ -1,0 +1,13 @@
+{
+  "label": {
+    "name": "deserve.htm"
+  },
+  "hint": {
+    "origin": "http://3564020356.org/deserve.htm",
+    "data": "base64,TUFMIFRJUlJVRVpGIENSIE1BTCBSS1pZSU9MIEVYIE1BTCBPSVkgVUFFIFJJQ0YgIk1BTCBBQ1dBTFJNIERZRVVQTEZXTCBDUiBNRSBEWUVVIE1BSU0gVUwgSVpMIFJLWlpFS1lGTEYgR0ggT0hSTUxaSCI=" 
+  },
+  "payload": {
+    "data": "b535ffd9263f275c6747ec804fee198e",
+    "method": { "name" : "md5" }
+  }
+}
