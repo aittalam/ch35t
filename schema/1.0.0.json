@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://3564020356.org/ch35t/schema/1.0.0.json",
+  "title": "Ch35t Schema",
+  "description": "Chests as defined in the Ch35t format",
+  "type": "object",
+  "properties": {
+    "label": {
+      "type": "object",
+      "description": "A label attached to the chest, containing information about it",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The chest name"
+        },
+        "URI": {
+          "type": "string",
+          "format": "uri",
+          "description": "A Uniform Resource Identifier for the chest (can match the URL it can be downloaded from"
+        },
+        "author": {
+          "type": "string",
+          "format": "email",
+          "description": "The email address of the chest creator (often used in conjuction with a signature"
+        }
+      },
+      "additionalProperties": false,
+      "required": [ "name" ]
+    },
+    "hint": {
+      "type": "object",
+      "description": "A hint that might help you find the key to open the chest",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "format": "uri",
+          "description": "A Uniform Resource Identifier for the hint (can match the URL it can be downloaded from)"
+        },
+        "data": {
+          "type": "string",
+          "description": "The hint contents (plain text or base64-encoded binary)"
+        },
+        "format": {
+          "enum": [ "text/plain", "application/zip" ],
+          "description": "The format (mime-type) of the hint contents. Note that we currently allow only formats for which we have a handler, but this is not strictly necessary (i.e. we can just save files we do not know how to handle and allow players to deal with them)"
+        }
+      },
+      "additionalProperties": false,
+      "if": {
+        "description": "If origin URL is provided with no data, we currently require a format to be specified (i.e. we do not assume text/plain default as we do with data)",
+        "allOf" : [
+          {
+            "required": [ "origin" ]
+          },
+          {
+            "not": { 
+              "required" : [ "data" ]
+            } 
+          }
+        ]
+      },
+      "then": {
+        "required": [ "format" ]
+      }
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "format": "uri",
+          "description": "A Uniform Resource Identifier for the payload (can match the URL it can be downloaded from)"
+        },
+        "data": {
+          "type": "string",
+          "description": "The hint contents (plain text or base64-encoded binary)"
+        },
+        "format": {
+          "enum": [ "text/plain", "application/zip" ],
+          "description": "The format (mime-type) of the payload contents. Note that we currently allow only formats for which we have a handler, but this is not strictly necessary (i.e. we can just save files we do not know how to handle and allow players to deal with them)"
+        },
+        "output-format": {
+          "type": "string",
+          "description": "The format (mime-type) of the decrypted payload. Note that as we do not necessarily need to handle this, we leave the possibility of using any format here."
+        },
+        "method": {
+          "type": "object",
+          "description": "The encryption method used to conceal the payload",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the encryption method"
+            },
+            "args" : {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Extra arguments to be provided to the method handler"
+            }
+          },
+          "additionalProperties": false,
+          "required": [ "name" ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "signature": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required" : [ "label", "payload" ]
+}

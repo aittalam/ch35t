@@ -1,0 +1,16 @@
+{
+  "label": {
+    "name": "I am a dummy chest",
+    "URI": "http://3564030356.org/ch35t/examples/dummy.json",
+    "author": "mala@sdf.org"
+  },
+  "hint": {
+    "origin": "http://this.is.the/hint/origin",
+    "data": "This is the hint data.",
+    "format": "text/plain"
+  },
+  "payload": {
+    "data": "This is simple, unuseful, plain text payload data.",
+    "format": "text/plain"
+  }
+}
