@@ -16,7 +16,7 @@
         "URI": {
           "type": "string",
           "format": "uri",
-          "description": "A Uniform Resource Identifier for the chest (can match the URL it can be downloaded from"
+          "description": "A Uniform Resource Identifier for the chest (might correspond to the URL the riddle can be downloaded from)"
         },
         "author": {
           "type": "string",
@@ -34,7 +34,7 @@
         "origin": {
           "type": "string",
           "format": "uri",
-          "description": "A Uniform Resource Identifier for the hint (can match the URL it can be downloaded from)"
+          "description": "A Uniform Resource Identifier for the hint (might correspond to the URL the hint can be downloaded from)"
         },
         "data": {
           "type": "string",
@@ -69,7 +69,7 @@
         "origin": {
           "type": "string",
           "format": "uri",
-          "description": "A Uniform Resource Identifier for the payload (can match the URL it can be downloaded from)"
+          "description": "A Uniform Resource Identifier for the payload (might correspond to the URL the payload can be downloaded from)"
         },
         "data": {
           "type": "string",
