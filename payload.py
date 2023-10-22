@@ -1,5 +1,6 @@
 class NullPayloadException(Exception):
-    pass
+    def __init__(self, message):
+        super().__init__(message)
 
 class Payload():
     _default_format = "text/plain"
@@ -7,7 +8,7 @@ class Payload():
     def __init__(self, json_data):
         payload = json_data.get('payload')
         if payload is None or (payload.get('data') is None and payload.get('origin') is None):
-            raise NullPayloadException
+            raise NullPayloadException("No payload has been provided in this chest's JSON")
 
         self.origin = payload.get('origin')
         self.data = payload.get('data')
@@ -22,7 +23,12 @@ class Payload():
         if self.fmt is None:
             self.fmt = self._default_format
 
-    def __str__(self):
+
+    def set_ctx(self, ctx):
+        self._ctx = ctx
+
+
+    def dump(self):
         return_str  =  "[i] Payload\n"
         return_str += f"    Origin: {self.origin}\n"
         return_str += f"    Data: {self.data}\n"

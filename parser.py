@@ -1,21 +1,39 @@
 import hint
 import payload
+import label
 import json
 import requests
 
+
+class ParserException(Exception):
+        def __init__(self, message):
+                    super().__init__(message)
+
+
 class ChestLoader():
-    ### TODO: add error handling here
+    ### TODO: add better error handling here
     def from_file(fname):
-        with open(fname, "rt") as f:
-            return json.load(f)
+        try:
+            with open(fname, "rt") as f:
+                return json.load(f)
+        except Exception as e:
+            raise ParserException(e)
         
     def from_string(string):
-        return json.loads(string)
+        try:
+            return json.loads(string)
+        except Exception as e:
+            raise ParserException(e)
     
     def from_url(url):
-        res = requests.get(url)
-        if res.status_code == 200:
-            return json.loads(res.text)
+        try:
+            res = requests.get(url)
+            if res.status_code == 200:
+                return json.loads(res.text)
+            return None
+        except Exception as e:
+            raise ParserException(e)
+
 
 class Parser():
 
@@ -23,6 +41,7 @@ class Parser():
         
         self._json = None
         self._hint = None
+        self._label = None
         self._payload = None
         self._method = None
 
@@ -38,11 +57,11 @@ class Parser():
             else:
                 self._load_string(string)
                 
+        # JSON is parsed only if not null
+        # This is done to allow for later manual loading of JSON,
+        # or to take JSON parsing errors into account
         if self._json is not None:
-            # load hint
-            self._hint = hint.Hint(self._json)
-            # load payload
-            self._payload = payload.Payload(self._json)
+            self._parse_json()
     
     def _load_string(self, string):
         self._json = ChestLoader.from_string(string)
@@ -53,6 +72,11 @@ class Parser():
     def _load_url(self, url):
         self._json = ChestLoader.from_url(url)
 
+    def _parse_json(self):
+        self._hint = hint.Hint(self._json)
+        self._payload = payload.Payload(self._json)
+        self._label = label.Label(self._json)
+
     def json(self):
         return self._json
 
@@ -62,5 +86,7 @@ class Parser():
     def payload(self):
         return self._payload
 
+    def label(self):
+        return self._label
 
-### TODO: add some main code here showing how a parser works 
+### TODO: add some main code here showing how a parser works
