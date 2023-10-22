@@ -6,8 +6,6 @@ import base64
 import os
 
 import parser
-import datahandlers
-import methodhandlers
 import validator
 
 class Chest():
@@ -36,11 +34,9 @@ class Chest():
         if self.payload is not None:
             self.payload.set_ctx(self._ctx)
 
-    def unlock(self):
-        key = input()
-
-        h = methodhandlers.get_handler(self._payload.method, self._payload.data, self._ctx)
-        h.unlock(key)
+    def unlock(self, key):
+        # try to unlock the chest, if successful return True
+        return self.payload.unlock(key)
 
     def json(self):
         return self._parser.json()

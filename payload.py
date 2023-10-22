@@ -1,3 +1,5 @@
+import methodhandlers
+
 class NullPayloadException(Exception):
     def __init__(self, message):
         super().__init__(message)
@@ -13,6 +15,7 @@ class Payload():
         self.origin = payload.get('origin')
         self.data = payload.get('data')
         self.fmt = payload.get('format')
+        self._handler = None
 
         # if a method is specified (note that it is optional!), get its name
         self.method = None
@@ -23,9 +26,15 @@ class Payload():
         if self.fmt is None:
             self.fmt = self._default_format
 
-
     def set_ctx(self, ctx):
         self._ctx = ctx
+
+    def unlock(self, key):
+        # calls methodhandler to unlock the payload
+        if self._handler is None:
+            self._handler = methodhandlers.get_handler(self.method, self.data, self._ctx)
+
+        return self._handler.unlock(key)
 
 
     def dump(self):

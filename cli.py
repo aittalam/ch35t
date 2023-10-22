@@ -82,13 +82,13 @@ def status(ctx):
         click.echo("🤷 no chest is around, go get one!")
     else:
         click.echo("📦 you have a chest with you")
-        click.echo(f" - the chest has a a label on it, saying its name is ", nl=False)
+        click.echo(f" - the chest has a label on it, saying its name is ", nl=False)
         click.secho(chest.name(), bold=True)
         if chest.author() is not None:
             click.echo(f" - there is also a name on the label, it appears the chest creator is ", nl=False)
             click.secho(chest.author(), bold=True)
         else:
-            click.echo(f" - the creator of the chest is unknown")
+            click.echo(f" - the creator of this chest is unknown")
 
     click.echo()
 
@@ -139,12 +139,19 @@ def label(ctx, dump):
         if dump:
             click.echo(chest.label.dump())
         else:
-            click.secho("Command not implemented yet", fg='yellow')
+            click.secho("You look at the label attached to the chest and read the following:", bold=True)
+            click.echo("-------------------------------------------------------------------")
+            click.echo("The name of this chest is: ", nl=False)
+            click.secho(chest.name(), bold=True)
+            click.echo("The name of its creator is: ", nl=False)
+            author = "Unknown" if chest.author() is None else chest.author()
+            click.secho(author, bold=True)
 
 
 @cli.command(add_help_option=False)
 @click.pass_context
 def help(ctx):
+    """Well you are here, so I suppose you know already ;-)"""
     # get custom help dictionary  
     help_dict = custom_help(ctx.parent, return_dict=True)
 
@@ -158,6 +165,7 @@ def help(ctx):
 @cli.command()
 @click.pass_context
 def validate(ctx):
+    """Validate the chest JSON according to Ch35t schema"""
     chest = ctx.obj.get("chest")
     if chest is None:
         click.secho("It appears you have no chest, try to get one first", fg='yellow')
@@ -168,6 +176,21 @@ def validate(ctx):
         except Exception as e:
             click.secho("Oh no, there seems to be a validation error:", fg='red')
             print(e)
+
+
+@cli.command()
+@click.pass_context
+@click.option("--key", prompt="Enter the key to open the chest", help="The key to be used to open the chest")
+def unlock(ctx, key):
+    """Unlock a chest provided a key"""
+    chest = ctx.obj.get("chest")
+    if chest is None:
+        click.secho("It appears you have no chest, try to get one first", fg='yellow')
+    else:
+        if chest.unlock(key):
+            click.secho("The chest is now unlocked!", fg='green')
+        else:
+            click.secho("The key is not the right one, the chest is still locked", fg='red')
 
 
 def repl():

@@ -35,4 +35,3 @@ class Hint():
         return_str += f"    Data: {self.data}\n"
         return_str += f"    Format: {self.format}\n"
         return return_str
-

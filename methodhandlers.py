@@ -5,6 +5,7 @@ import hashlib
 class NullOutputDirException(Exception):
     pass
 
+
 class MethodHandler:
     '''
         Handles payloads (depending on encryption method, it
@@ -15,15 +16,23 @@ class MethodHandler:
     method = None
 
     def __init__(self, data, ctx):
+        if ctx is None or ctx.get('output_dir', None) is None:
+            raise NullOutputDirException
+
         # simply store the data for later use
         # (note that we assume data is already base64 decoded)
         self._data = data
         self._ctx = ctx
+        self._output_dir = ctx['output_dir']
 
     def unlock(self, key):
         '''
-            
-            (returns None)
+            Unlocks a payload. This means applying an input key
+            to the payload. The outcomes might differ (e.g. the
+            key can be verified against a hash, it can be used
+            to decrypt some content, etc.) but unlock is limited
+            to verifying whether the key is correct and return
+            True if so, False otherwise.
         '''
         raise NotImplementedError
 
@@ -33,14 +42,14 @@ class MD5Handler(MethodHandler):
 
     def unlock(self, key):
         '''
-            
-            (returns None)
+            Checks the key against a provided MD5 hash. Returns
+            True if the hashed key matches, False otherwise
         '''
 
         if hashlib.md5(key.encode('utf-8')).hexdigest() == self._data:
-            print("Chest unlocked")
+            return True
         else:
-            print("Wrong key")
+            return False
 
 
 # Dictionary mapping mime types to classes
