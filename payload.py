@@ -15,7 +15,7 @@ class Payload():
         self.origin = payload.get('origin')
         self.data = payload.get('data')
         self.fmt = payload.get('format')
-        self._handler = None
+        self._methodhandler = None
 
         # if a method is specified (note that it is optional!), get its name
         self.method = None
@@ -31,11 +31,10 @@ class Payload():
 
     def unlock(self, key):
         # calls methodhandler to unlock the payload
-        if self._handler is None:
-            self._handler = methodhandlers.get_handler(self.method, self.data, self._ctx)
+        if self._methodhandler is None:
+            self._methodhandler = methodhandlers.get_handler(self.method, self.data, self._ctx)
 
-        return self._handler.unlock(key)
-
+        return self._methodhandler.unlock(key)
 
     def dump(self):
         return_str  =  "[i] Payload\n"

@@ -24,6 +24,7 @@ class MethodHandler:
         self._data = data
         self._ctx = ctx
         self._output_dir = ctx['output_dir']
+        self._cleartext_data = None
 
     def unlock(self, key):
         '''
@@ -35,7 +36,6 @@ class MethodHandler:
             True if so, False otherwise.
         '''
         raise NotImplementedError
-
 
 class MD5Handler(MethodHandler):
     method = "md5"

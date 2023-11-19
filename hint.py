@@ -17,16 +17,16 @@ class Hint():
         self.fmt = hint.get('format')
         if self.fmt is None:
             self.fmt = self._default_format
-        self._handler = None
+        self._datahandler = None
 
     def set_ctx(self, ctx):
         self._ctx = ctx
 
     def __str__(self):
-        if self._handler is None:
-            self._handler = datahandlers.get_handler(self.fmt, self.data, self._ctx)
-            self._handler.handle()
-        return self._handler.to_string()
+        if self._datahandler is None:
+            self._datahandler = datahandlers.get_handler(self.fmt, self.data, self._ctx)
+            self._datahandler.handle()
+        return self._datahandler.to_string()
 
 
     def dump(self):
