@@ -1,6 +1,6 @@
 import zipfile
-import base64 
 import io
+from utils import text_decode
 
 # application/octet-stream is used for generic binary files
 
@@ -19,23 +19,10 @@ class DataHandler:
         if ctx is None or ctx.get('output_dir', None) is None:
             raise NullOutputDirException
 
-        # simply store the data for later use
-        self._data = data
+        # simply store text-decoded data for later use
+        self._data = text_decode(data)
         self._ctx = ctx
         self._output_dir = ctx['output_dir']
-
-    def decode_data(self):
-        '''
-            Returns decoded data (to be used when data is not
-            plain text but in a text-encoded format)
-            
-            NOTE: currently working with base64 only
-        '''
-        (encoder, data) = self._data.split(',')
-        
-        # For now we assume that encoder is always base64
-        # and return the following:
-        return base64.b64decode(data)
 
     def to_string(self):
         '''
@@ -58,8 +45,12 @@ class TextDataHandler(DataHandler):
         super().__init__(data, ctx)
 
     def handle(self):
-        if self._data.startswith("base64,"):
-            self._data = self.decode_data().decode()
+        # if data was base64-encoded, and after decoding it we have bytes,
+        # we can assume text was encoded (e.g. in utf-8)
+        # TODO: add support for different encodings, for now we only
+        #       consider utf-8
+        if type(self._data) == bytes:
+            self._data = self._data.decode('utf-8')
 
 
 class ZipDataHandler(DataHandler):
@@ -67,7 +58,6 @@ class ZipDataHandler(DataHandler):
 
     def __init__(self, data, ctx):
         super().__init__(data, ctx)
-        self._data = self.decode_data()
 
     def handle(self):
         with zipfile.ZipFile(io.BytesIO(self._data), "r") as zf:

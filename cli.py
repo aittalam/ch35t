@@ -129,6 +129,22 @@ def hint(ctx, dump):
 
 @cli.command()
 @click.pass_context
+@click.option('--dump', help="Just show the raw payload object", is_flag=True, default=False, show_default=True)
+def payload(ctx, dump):
+    """Shows a chest's payload"""
+    chest = ctx.obj.get("chest")
+    if chest is None:
+        click.secho("It appears you have no chest, try to get one first", fg='yellow')
+    else:
+        if dump:
+            click.echo(chest.payload.dump())
+        else:
+            click.secho("Here is the content of your chest:", bold=True)
+            click.echo(chest.payload)
+
+
+@cli.command()
+@click.pass_context
 @click.option('--dump', help="Just show the raw hint object", is_flag=True, default=False, show_default=True)
 def label(ctx, dump):
     """Shows a chest's label"""

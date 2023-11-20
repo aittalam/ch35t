@@ -1,4 +1,5 @@
 import methodhandlers
+import datahandlers
 
 class NullPayloadException(Exception):
     def __init__(self, message):
@@ -15,7 +16,9 @@ class Payload():
         self.origin = payload.get('origin')
         self.data = payload.get('data')
         self.fmt = payload.get('format')
+        self.cleartext_data = None
         self._methodhandler = None
+        self._datahandler = None
 
         # if a method is specified (note that it is optional!), get its name
         self.method = None
@@ -34,12 +37,23 @@ class Payload():
         if self._methodhandler is None:
             self._methodhandler = methodhandlers.get_handler(self.method, self.data, self._ctx)
 
-        return self._methodhandler.unlock(key)
+        if self._methodhandler.unlock(key):
+            self.cleartext_data = self._methodhandler._cleartext_data
+            return True
+
+        return False
+
+    def __str__(self):
+        if self._datahandler is None:
+            self._datahandler = datahandlers.get_handler(self.fmt, self.cleartext_data, self._ctx)
+            self._datahandler.handle()
+        return self._datahandler.to_string()
 
     def dump(self):
         return_str  =  "[i] Payload\n"
         return_str += f"    Origin: {self.origin}\n"
         return_str += f"    Data: {self.data}\n"
+        return_str += f"    Cleartext Data: {self.cleartext_data}\n"
         return_str += f"    Format: {self.fmt}\n"
         return_str += f"    Method: {self.method}\n"
         return return_str
