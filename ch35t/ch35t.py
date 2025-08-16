@@ -1,16 +1,16 @@
 import os
 
-import parser
-import validator
+from ch35t.parser import Parser
+from ch35t.validator import Validator
 
 class Chest():
     def __init__(self, chestfile, chests_dir="/tmp/chests"):
         self._chests_dir = chests_dir
-        self._parser = parser.Parser(chestfile)
+        self._parser = Parser(chestfile)
         self.hint = self._parser.hint()
         self.payload = self._parser.payload()
         self.label = self._parser.label()
-        self._validator = validator.Validator()
+        self._validator = Validator()
         self._ctx = {
             "output_dir": chests_dir
         }

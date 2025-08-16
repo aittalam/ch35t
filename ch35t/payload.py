@@ -1,5 +1,5 @@
-import methodhandlers
-import datahandlers
+import ch35t.methodhandlers as mh
+import ch35t.datahandlers as dh
 
 class NullPayloadException(Exception):
     def __init__(self, message):
@@ -35,7 +35,7 @@ class Payload():
     def unlock(self, key):
         # calls methodhandler to unlock the payload
         if self._methodhandler is None:
-            self._methodhandler = methodhandlers.get_handler(self.method, self.data, self._ctx)
+            self._methodhandler = mh.get_handler(self.method, self.data, self._ctx)
 
         if self._methodhandler.unlock(key):
             self.cleartext_data = self._methodhandler._cleartext_data
@@ -45,7 +45,7 @@ class Payload():
 
     def __str__(self):
         if self._datahandler is None:
-            self._datahandler = datahandlers.get_handler(self.fmt, self.cleartext_data, self._ctx)
+            self._datahandler = dh.get_handler(self.fmt, self.cleartext_data, self._ctx)
             self._datahandler.handle()
         return self._datahandler.to_string()
 

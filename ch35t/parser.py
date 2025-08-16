@@ -1,6 +1,6 @@
-import hint
-import payload
-import label
+from ch35t.hint import Hint
+from ch35t.payload import Payload
+from ch35t.label import Label
 import json
 import requests
 
@@ -73,9 +73,9 @@ class Parser():
         self._json = ChestLoader.from_url(url)
 
     def _parse_json(self):
-        self._hint = hint.Hint(self._json)
-        self._payload = payload.Payload(self._json)
-        self._label = label.Label(self._json)
+        self._hint = Hint(self._json)
+        self._payload = Payload(self._json)
+        self._label = Label(self._json)
 
     def json(self):
         return self._json

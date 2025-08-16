@@ -1,7 +1,7 @@
 import os
 import base64
 import hashlib
-from utils import text_decode
+from ch35t.utils import text_decode
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 class NullOutputDirException(Exception):

@@ -1,6 +1,6 @@
 import click
 import click_repl
-from ch35t import Chest
+from ch35t.ch35t import Chest
 import os
 from prompt_toolkit.history import FileHistory
 
@@ -217,6 +217,8 @@ def repl():
     click_repl.repl(click.get_current_context(), prompt_kwargs=prompt_kwargs)
 
 
-if __name__ == '__main__':
+def main():
     cli(obj={})
 
+if __name__ == '__main__':
+    main()

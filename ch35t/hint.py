@@ -1,4 +1,4 @@
-import datahandlers
+from ch35t.datahandlers import get_handler
 
 class NullHintException(Exception):
     def __init__(self, message):
@@ -24,7 +24,7 @@ class Hint():
 
     def __str__(self):
         if self._datahandler is None:
-            self._datahandler = datahandlers.get_handler(self.fmt, self.data, self._ctx)
+            self._datahandler = get_handler(self.fmt, self.data, self._ctx)
             self._datahandler.handle()
         return self._datahandler.to_string()
 
