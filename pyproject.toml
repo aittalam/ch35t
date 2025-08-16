@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ch35t"
-version = "0.1.7"
+version = "0.1.8"
 description = "An open format for describing riddles and encrypted resources"
 readme = "README.md"
 authors = [
@@ -15,7 +15,7 @@ requires-python = ">=3.11"
 dependencies = [
     "click==8.1.7",
     "click-repl==0.3.0",
-    "cryptography==45.0.5",
+    "cryptography>=41.0.5",
     "jsonschema==4.23.0",
     "requests==2.32.4",
 ]
