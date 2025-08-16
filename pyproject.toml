@@ -20,6 +20,23 @@ dependencies = [
     "requests==2.32.4",
 ]
 
+[dependency-groups]
+dev = [
+  { include-group = "lint" },
+  { include-group = "build" },
+]
+
+lint = [
+  "pre-commit==4.2.0",
+  "ruff==0.12.9",
+]
+
+build = [
+  "build==1.3.0",
+  "twine==6.1.0",
+]
+
+
 [project.urls]
 Homepage = "https://github.com/aittalam/ch35t"
 
