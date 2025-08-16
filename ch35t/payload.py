@@ -45,8 +45,17 @@ class Payload():
 
     def __str__(self):
         if self._datahandler is None:
-            self._datahandler = dh.get_handler(self.fmt, self.cleartext_data, self._ctx)
+            if not self.cleartext_data:
+                ctdata = self.data
+
+            if hasattr(self, "_ctx"):
+                context = self._ctx
+            else:
+                context = {"output_dir": "/tmp"}
+
+            self._datahandler = dh.get_handler(self.fmt, ctdata, context)
             self._datahandler.handle()
+
         return self._datahandler.to_string()
 
     def dump(self):

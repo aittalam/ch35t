@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 
 SCHEMA_VERSION = "1.0.0"
-SCHEMA_FILE_PATH = Path(__file__).resolve().parent / f"schema/{SCHEMA_VERSION}.json"
+SCHEMA_FILE_PATH = Path(__file__).resolve().parent.parent / f"ch35t/schema/{SCHEMA_VERSION}.json"
 
 class TestSchema(unittest.TestCase):
     

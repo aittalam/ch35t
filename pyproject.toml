@@ -24,6 +24,8 @@ dependencies = [
 dev = [
   { include-group = "lint" },
   { include-group = "build" },
+  { include-group = "test" },
+  { include-group = "docs" },
 ]
 
 lint = [
@@ -36,6 +38,13 @@ build = [
   "twine==6.1.0",
 ]
 
+test = [
+  "jupyterlab==4.4.6",
+]
+
+docs = [
+  "jsonschema2md",
+]
 
 [project.urls]
 Homepage = "https://github.com/aittalam/ch35t"
