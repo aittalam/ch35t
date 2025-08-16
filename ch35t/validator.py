@@ -1,5 +1,9 @@
 import json
 import jsonschema
+from pathlib import Path
+
+SCHEMA_VERSION = "1.0.0"
+SCHEMA_FILE_PATH = Path(__file__).resolve().parent / f"schema/{SCHEMA_VERSION}.json"
 
 class ValidationError(Exception):
     def __init__(self, message):
@@ -7,7 +11,7 @@ class ValidationError(Exception):
 
 class Validator():
 
-    def __init__(self, schema_file="schema/1.0.0.json"):
+    def __init__(self, schema_file=SCHEMA_FILE_PATH):
         with open(schema_file, "rt") as f:
             self._schema = json.load(f)
 

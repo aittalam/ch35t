@@ -1,6 +1,6 @@
 import zipfile
 import io
-from .utils import text_decode
+from utils import text_decode
 
 # application/octet-stream is used for generic binary files
 

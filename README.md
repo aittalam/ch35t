@@ -51,7 +51,7 @@ This way you can easily test the validity of your chest file, and
 I can easily generate documentation starting from a properly 
 commented schema file.
 
-You can find the JSON definition [here](./schema/1.0.0.json), and
+You can find the JSON definition [here](./ch35t/schema/1.0.0.json), and
 a human-readable, markdown version [here](./schema.md).
 
 
@@ -64,7 +64,7 @@ Also, this does not mean there is nothing to play with yet:
 
 ### What is currently available
 
-- a [v1.0.0](./schema/1.0.0.json) of the format [schema](./schema.md)
+- a [v1.0.0](./ch35t/schema/1.0.0.json) of the format [schema](./schema.md)
 - a [notebook](./testing_ch35t.ipynb) explaining the basics of Ch35t
   (and showing you how to start playing with very simple examples)
 - a few ready-to-play chests in the examples folder, replicating the

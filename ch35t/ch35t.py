@@ -1,7 +1,7 @@
 import os
 
-from . import parser
-from . import validator
+import parser
+import validator
 
 class Chest():
     def __init__(self, chestfile, chests_dir="/tmp/chests"):

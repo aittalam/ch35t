@@ -2,6 +2,10 @@ import unittest
 import json 
 from jsonschema import validate, ValidationError
 import os
+from pathlib import Path
+
+SCHEMA_VERSION = "1.0.0"
+SCHEMA_FILE_PATH = Path(__file__).resolve().parent / f"schema/{SCHEMA_VERSION}.json"
 
 class TestSchema(unittest.TestCase):
     
@@ -9,7 +13,7 @@ class TestSchema(unittest.TestCase):
     bad_files_path = "tests/bad_json"
     
     def setUp(self):
-        with open("schema/1.0.0.json", "rt") as f:
+        with open(SCHEMA_FILE_PATH, "rt") as f:
             self.s = json.load(f)
         
         self.good_files = [f for f in os.listdir(self.good_files_path)
