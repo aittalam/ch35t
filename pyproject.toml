@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ch35t"
-version = "0.1.8"
+version = "0.1.9"
 description = "An open format for describing riddles and encrypted resources"
 readme = "README.md"
 authors = [
@@ -40,6 +40,7 @@ build = [
 
 test = [
   "jupyterlab==4.4.6",
+  "marimo==0.14.17",
 ]
 
 docs = [
