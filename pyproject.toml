@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ch35t"
-version = "0.1.2"
+version = "0.1.7"
 description = "An open format for describing riddles and encrypted resources"
 readme = "README.md"
 authors = [
@@ -15,9 +15,9 @@ requires-python = ">=3.11"
 dependencies = [
     "click==8.1.7",
     "click-repl==0.3.0",
-    "cryptography==42.0.3",
-    "jsonschema==4.20.0",
-    "requests==2.31.0",
+    "cryptography==45.0.5",
+    "jsonschema==4.23.0",
+    "requests==2.32.4",
 ]
 
 [project.urls]
@@ -26,5 +26,9 @@ Homepage = "https://github.com/aittalam/ch35t"
 [tool.setuptools]
 packages = ["ch35t"]
 
+[tool.setuptools.package-data]
+ch35t = ["schema/*.json"]
+
 [project.scripts]
 ch35t = "ch35t.cli:main"
+

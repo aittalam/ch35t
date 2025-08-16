@@ -6,3 +6,4 @@ chests
 TODO.md
 wasm
 dist
+*.egg-info
