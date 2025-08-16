@@ -67,7 +67,7 @@ wheels = [
 
 [[package]]
 name = "ch35t"
-version = "0.1.7"
+version = "0.1.8"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
@@ -81,7 +81,7 @@ dependencies = [
 requires-dist = [
     { name = "click", specifier = "==8.1.7" },
     { name = "click-repl", specifier = "==0.3.0" },
-    { name = "cryptography", specifier = "==45.0.5" },
+    { name = "cryptography", specifier = ">=41.0.5" },
     { name = "jsonschema", specifier = "==4.23.0" },
     { name = "requests", specifier = "==2.32.4" },
 ]
