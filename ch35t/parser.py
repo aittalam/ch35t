@@ -1,6 +1,6 @@
-import hint
-import payload
-import label
+from . import hint
+from . import payload
+from . import label
 import json
 import requests
 

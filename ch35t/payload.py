@@ -1,5 +1,5 @@
-import methodhandlers
-import datahandlers
+from . import methodhandlers
+from . import datahandlers
 
 class NullPayloadException(Exception):
     def __init__(self, message):

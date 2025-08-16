@@ -1,4 +1,4 @@
-import datahandlers
+from . import datahandlers
 
 class NullHintException(Exception):
     def __init__(self, message):

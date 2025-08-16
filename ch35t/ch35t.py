@@ -1,12 +1,7 @@
-import json
-import requests
-import hashlib
-import zipfile
-import base64
 import os
 
-import parser
-import validator
+from . import parser
+from . import validator
 
 class Chest():
     def __init__(self, chestfile, chests_dir="/tmp/chests"):
