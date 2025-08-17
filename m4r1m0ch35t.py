@@ -8,7 +8,7 @@ app = marimo.App(width="medium")
 async def _():
     import marimo as mo
     import micropip
-    await micropip.install("ch35t==0.1.8")
+    await micropip.install("ch35t==0.1.9")
     return (mo,)
 
 
